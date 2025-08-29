@@ -20,6 +20,12 @@ jobs:
           --health-retries=5
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
       - run: psql -h localhost -U postgres -c 'SELECT 1'
         env:
           PGPASSWORD: password
