@@ -26,7 +26,8 @@ RUN apt-get update && \
 RUN apt-get -y install sudo && \
   useradd -m -u ${UID} ${USER} && \
   echo ${USER}:${PASS} | chpasswd && \
-  echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+  echo "$USER ALL=(ALL) ALL" >> /etc/sudoers && \
+  usermod -a -G docker ${USER}
 
 # setup runner
 WORKDIR /actions-runner
