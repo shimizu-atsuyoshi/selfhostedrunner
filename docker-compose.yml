@@ -1,0 +1,10 @@
+services:
+  runner:
+    build: ./
+    tty: true
+    privileged: true
+    tmpfs:
+      - /run
+      - /run/lock
+    command:
+      - /sbin/init

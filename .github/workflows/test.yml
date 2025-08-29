@@ -1,0 +1,25 @@
+name: test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: [self-hosted, linux, arm64, docker]
+    services:
+      postgres:
+        image: postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - run: psql -h localhost -U postgres -c 'SELECT 1'
+        env:
+          PGPASSWORD: password
